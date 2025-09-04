@@ -23,7 +23,7 @@ const About = () => {
               ABOUT WOLFGUIDER
             </span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-bold mb-8 cyber-gradient">
+          <h2 className="text-4xl md:text-4xl font-bold mb-8 cyber-gradient">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00FF94] via-[#00FF94] to-[#FF2E63]">
               Trusted Cybersecurity for Modern Businesses
             </span>
@@ -31,24 +31,26 @@ const About = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-[#00FF94] to-[#FF2E63] mx-auto mb-8 rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
-          <div>
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              WolfGuider empowers companies with{' '}
-              <span className="text-[#00FF94] font-semibold">
-                cutting-edge cybersecurity solutions
-              </span>{' '}
-              to protect sensitive data, maintain compliance, and ensure
-              business continuity.
-            </p>
-            <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-              From small businesses to large enterprises, our{' '}
-              <span className="text-white font-medium">
-                enterprise-grade security platform
-              </span>{' '}
-              delivers real-time monitoring, proactive threat prevention, and
-              cost-efficient protection.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch mb-16">
+          <div className="flex flex-col justify-between">
+            <div>
+              <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                WolfGuider empowers companies with{' '}
+                <span className="text-[#00FF94] font-semibold">
+                  cutting-edge cybersecurity solutions
+                </span>{' '}
+                to protect sensitive data, maintain compliance, and ensure
+                business continuity.
+              </p>
+              <p className="text-lg text-gray-400 mb-8 leading-relaxed">
+                From small businesses to large enterprises, our{' '}
+                <span className="text-white font-medium">
+                  enterprise-grade security platform
+                </span>{' '}
+                delivers real-time monitoring, proactive threat prevention, and
+                cost-efficient protection.
+              </p>
+            </div>
 
             <div className="grid grid-cols-2 gap-8 mb-8">
               <div className="text-center glassmorphism p-6 rounded-xl hover:scale-105 transition-transform duration-300 border border-[#00FF94]/20 hover:border-[#00FF94]/40">
@@ -155,11 +157,11 @@ const About = () => {
             </div>
           </div>
 
-          {/* Image section */}
-          <div className="relative">
-            <div className="glassmorphism p-8 rounded-2xl border border-gray-700/50 hover:border-[#00FF94]/30 transition-all duration-500">
-              <div className="relative group">
-                <div className="grid grid-cols-2 gap-4 mb-6">
+          {/* Image section - Fixed height issue */}
+          <div className="h-full">
+            <div className="glassmorphism p-8 rounded-2xl border border-gray-700/50 hover:border-[#00FF94]/30 transition-all duration-500 h-full flex flex-col">
+              <div className="relative group mb-6">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="relative overflow-hidden rounded-lg h-32">
                     <img
                       src="/images/about1.png"
@@ -189,7 +191,7 @@ const About = () => {
                 The WolfGuider Advantage
               </h3>
 
-              <div className="space-y-4">
+              <div className="space-y-4 flex-grow">
                 {[
                   {
                     title: 'No Compromise Security',
