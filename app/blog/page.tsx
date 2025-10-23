@@ -1,335 +1,367 @@
-import React from 'react';
-import Head from 'next/head';
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Key, 
+  Lock, 
+  Scan, 
+  BookOpen, 
+  X 
+} from 'lucide-react';
 
-const BlogPage: React.FC = () => {
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'Why Cybersecurity Is Important for Individuals and Organizations',
-      excerpt: 'Hackers often target individuals and organizations because they usually don’t have strong security systems. Just one attack can',
-      date: '2025',
-      slug: 'cybersecurity-threats-2025',
-      category: 'Threat Intelligence',
-      readTime: '8 min read',
-      image: '/images/blog1.png'
-    },
-    {
-      id: 2,
-      title: 'How to Spot a Fake Website Before You Click',
-      excerpt: 'In today’s digital world, fake websites are everywhere, and they’re becoming increasingly difficult to spot. Cybercriminals use them to steal your personal information, trick you into downloading malware, or even hijack your accounts.',
-      date: '2025',
-      slug: 'zero-trust-architecture',
-      category: 'Network Security',
-      readTime: '10 min read',
-      image: '/images/blog2.png'
-    },
-    {
-      id: 3,
-      title: 'The Dangers of Public Wi-Fi and How to Stay Safe',
-      excerpt: 'Free Wi-Fi might be convenient, but it can also be a hacker’s playground. Learn how attackers can intercept your data and how you can protect yourself.',
-      date: '2025',
-      slug: 'public-wifi-risks',
-      category: 'Network Security',
-      readTime: '7 min read',
-      image: '/images/blog3.png'
-    },
-    {
-      id: 4,
-      title: 'Why Your Password Might Already Be Leaked',
-      excerpt: 'Millions of passwords are leaked every year. Learn how it happens and how to check if your credentials are exposed.',
-      date: '2025',
-      slug: 'password-leaks',
-      category: 'Threat Intelligence',
-      readTime: '6 min read',
-      image: '/images/blog4.png'
-    },
-    {
-      id: 5,
-      title: 'Top 10 Ransomware Attacks of 2025',
-      excerpt: 'Ransomware continues to evolve, targeting governments, hospitals, and businesses. Here are the biggest cases from this year.',
-      date: '2025',
-      slug: 'ransomware-2025',
-      category: 'Malware Analysis',
-      readTime: '9 min read',
-      image: '/images/blog5.png'
-    },
-    {
-      id: 6,
-      title: 'Phishing Emails: Tricks Hackers Use to Fool You',
-      excerpt: 'Phishing emails are more convincing than ever. Discover the red flags and how to avoid falling victim.',
-      date: '2025',
-      slug: 'phishing-attacks',
-      category: 'Threat Intelligence',
-      readTime: '8 min read',
-      image: '/images/blog6.png'
-    },
-    {
-      id: 7,
-      title: 'Deepfake Scams: The New Face of Cybercrime',
-      excerpt: 'AI-powered deepfakes are being used to scam individuals and companies. Learn how to spot them before it’s too late.',
-      date: '2025',
-      slug: 'deepfake-scams',
-      category: 'AI Security',
-      readTime: '12 min read',
-      image: '/images/blog7.png'
-    },
-    {
-      id: 8,
-      title: 'Why Two-Factor Authentication (2FA) Is a Must in 2025',
-      excerpt: 'Passwords alone are not enough. Here’s why enabling 2FA can save your accounts from being hacked.',
-      date: '2025',
-      slug: 'two-factor-authentication',
-      category: 'Network Security',
-      readTime: '5 min read',
-      image: '/images/blog8.png'
-    },
-    {
-      id: 9,
-      title: 'IoT Security Risks: When Your Smart Home Turns Against You',
-      excerpt: 'Smart devices are convenient, but they’re also vulnerable to hacking. Learn how to secure your IoT gadgets.',
-      date: '2025',
-      slug: 'iot-security',
-      category: 'IoT Security',
-      readTime: '9 min read',
-      image: '/images/blog9.png'
-    },
-    {
-      id: 10,
-      title: 'What Is Ethical Hacking? A Beginner’s Guide',
-      excerpt: 'Not all hackers are bad. Ethical hackers help organizations find and fix security weaknesses.',
-      date: '2025',
-      slug: 'ethical-hacking',
-      category: 'Penetration Testing',
-      readTime: '6 min read',
-      image: '/images/blog10.png'
-    },
-    {
-      id: 11,
-      title: 'Cloud Security Challenges in 2025',
-      excerpt: 'Cloud adoption is growing, but so are cyber risks. Learn the top challenges businesses face and how to overcome them.',
-      date: '2025',
-      slug: 'cloud-security-2025',
-      category: 'Cloud Security',
-      readTime: '8 min read',
-      image: '/images/blog11.png'
-    },
-    {
-      id: 12,
-      title: 'The Rise of AI-Powered Cyber Attacks',
-      excerpt: 'Cybercriminals are using AI to automate phishing, password cracking, and malware creation. Here’s how it’s changing the threat landscape.',
-      date: '2025',
-      slug: 'ai-cyber-attacks',
-      category: 'AI Security',
-      readTime: '11 min read',
-      image: '/images/blog12.png'
-    },
-    {
-      id: 13,
-      title: 'Social Engineering: Why Humans Are the Weakest Link',
-      excerpt: 'Hackers don’t just exploit systems, they exploit people. Learn the psychology behind social engineering.',
-      date: '2025',
-      slug: 'social-engineering',
-      category: 'Threat Intelligence',
-      readTime: '7 min read',
-      image: '/images/blog13.png'
-    },
-    {
-      id: 14,
-      title: 'Zero Trust Security: Why Companies Are Adopting It',
-      excerpt: 'Trust no one, verify everything. Zero Trust is becoming the new standard for network security.',
-      date: '2025',
-      slug: 'zero-trust-security',
-      category: 'Network Security',
-      readTime: '9 min read',
-      image: '/images/blog14.png'
-    },
-    {
-      id: 15,
-      title: 'Malware vs. Virus: What’s the Difference?',
-      excerpt: 'People often confuse viruses with malware. Learn the key differences and why it matters.',
-      date: '2025',
-      slug: 'malware-vs-virus',
-      category: 'Malware Analysis',
-      readTime: '5 min read',
-      image: '/images/blog15.png'
-    },
-    {
-      id: 16,
-      title: 'How to Build a Career in Cybersecurity',
-      excerpt: 'Cybersecurity professionals are in high demand. Here’s how you can start your career in this field.',
-      date: '2025',
-      slug: 'cybersecurity-career',
-      category: 'Compliance',
-      readTime: '12 min read',
-      image: '/images/blog16.png'
-    },
-    {
-      id: 17,
-      title: 'The Future of Digital Privacy in 2025',
-      excerpt: 'From social media to smart devices, privacy is under threat. Learn how to take control of your data.',
-      date: '2025',
-      slug: 'digital-privacy-2025',
-      category: 'Compliance',
-      readTime: '10 min read',
-      image: '/images/blog17.png'
-    },
-    {
-      id: 19,
-      title: 'Dark Web: What Really Happens There?',
-      excerpt: 'The dark web isn’t just about illegal activities, but it’s also where stolen data is traded. Learn the truth behind it.',
-      date: '2025',
-      slug: 'dark-web-explained',
-      category: 'Threat Intelligence',
-      readTime: '9 min read',
-      image: '/images/blog1.png'
-    },
+// --- Configuration Data ---
+const TOOLS_DATA = [
+  { icon: 'key', name: 'SHADOWBREACH', desc: 'APT Emulation Suite', details: 'Automate complex, multi-stage attack scenarios for comprehensive testing.' },
+  { icon: 'lock', name: 'CRYPTEX', desc: 'Secure Data Protocol', details: 'Ensure integrity and zero-knowledge transfer across all critical assets.' },
+  { icon: 'scan', name: 'PULSAR SCAN', desc: 'Vulnerability Detection', details: 'Pinpoint and prioritize systemic weaknesses using proprietary scanning logic.' },
+];
+
+const BLOG_PREVIEWS = [
+  { title: 'Exploiting API Gateways with Rate Limit Bypass', date: 'Oct 23, 2025', category: 'Exploits' },
+  { title: 'The Future of Zero-Trust: A 2026 Forecast', date: 'Oct 15, 2025', category: 'Strategy' },
+  { title: 'Deep Dive: Cryptographic Flaws in WebAssembly', date: 'Oct 01, 2025', category: 'Analysis' },
+];
+
+// Icon component with Lucide icons
+const Icon = ({ name, className = 'w-6 h-6' }: { name: string, className?: string }) => {
+  const icons: Record<string, JSX.Element> = {
+    key: <Key className={className} />,
+    lock: <Lock className={className} />,
+    scan: <Scan className={className} />,
+    book: <BookOpen className={className} />,
+    close: <X className={className} />,
+  };
+  return icons[name] || <div className={className}></div>;
+};
+
+// Simplified, bold Logo
+const WolfLogo = ({ className = 'w-32 h-32' }: { className?: string }) => (
+  <svg
+    className={`text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.9)] ${className}`}
+    viewBox="0 0 200 150"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path fill="url(#wolfGradient)" d="M100 15l-45 45h-10l-25 65h160l-25-65h-10l-45-45z" />
+    <defs>
+      <linearGradient id="wolfGradient" x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" style={{stopColor:"rgb(252,165,165)", stopOpacity:1}} />
+        <stop offset="100%" style={{stopColor:"rgb(220,38,38)", stopOpacity:0.9}} />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+// Live Audit Feed Modal with Nmap Simulation
+const LiveAuditFeedModal = ({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) => {
+  if (!isVisible) return null;
+
+  const terminalRef = useRef<HTMLDivElement>(null);
+  const [visibleLines, setVisibleLines] = useState(0);
+
+  const simulationScript = [
+    { text: '$ user@wolfguider:~$ sudo nmap -sC -sV 192.168.1.0/24 -p 1-1024', type: 'command' },
+    { text: '[AUDIT] Target: Dept-Audit-Server-01 (192.168.1.10)', type: 'info' },
+    { text: '[NMAP] Starting Nmap 7.93 ( Ethical Security Audit ) at 2025-10-23 11:19 PKT', type: 'info' },
+    { text: 'Scanning network segment 192.168.1.0/24 for Dept Vulnerabilities...', type: 'info' },
+    { text: 'Nmap scan report for 192.168.1.10', type: 'info' },
+    { text: 'Host is up (0.005s latency).', type: 'success' },
+    { text: '--------------------------------------------------------------------------------', type: 'separator' },
+    { text: 'PORT STATE SERVICE VERSION', type: 'header' },
+    { text: '22/tcp open ssh OpenSSH 8.9 (Ubuntu)', type: 'success' },
+    { text: '80/tcp open http Apache httpd 2.4.52 ((Ubuntu))', type: 'alert' },
+    { text: '443/tcp open ssl/http Apache httpd 2.4.52 ((Ubuntu))', type: 'alert' },
+    { text: '3306/tcp closed mysql', type: 'info' },
+    { text: '--------------------------------------------------------------------------------', type: 'separator' },
+    { text: 'Service detection performed. Vulnerability identified on HTTP/443.', type: 'info' },
+    { text: 'Dept-Audit-01: Found 2 open HTTP ports. Immediate patch required.', type: 'alert' },
+    { text: '$ user@wolfguider:~$ AUDIT COMPLETE. GENERATING SHADOWBREACH REPORT.', type: 'command' },
   ];
+  
+  const getLineStyle = (type: string) => {
+    switch(type) {
+      case 'command': return 'text-red-400 font-bold';
+      case 'info': return 'text-gray-400';
+      case 'success': return 'text-green-500';
+      case 'alert': return 'text-yellow-400 font-bold';
+      case 'header': return 'text-red-500 font-bold border-b border-red-900/50 pb-1';
+      case 'separator': return 'text-gray-600';
+      default: return 'text-white';
+    }
+  };
+
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const interval = setInterval(() => {
+      setVisibleLines(prev => {
+        if (prev < simulationScript.length) {
+          return prev + 1;
+        }
+        clearInterval(interval);
+        return prev;
+      });
+    }, 700);
+
+    return () => clearInterval(interval);
+  }, [isVisible]); 
+  
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [visibleLines]);
 
   return (
-    <>
-      <Head>
-        <title>Cybersecurity Blog | Latest Trends, Threats & Defense Strategies</title>
-        <meta name="description" content="Stay updated with the latest cybersecurity news, threat intelligence, and best practices from industry experts." />
-        <meta name="keywords" content="cybersecurity blog, hacking news, threat intelligence, network security, ethical hacking" />
-        <meta property="og:title" content="Cybersecurity Blog | WolfGuider" />
-        <meta property="og:description" content="Expert insights on cybersecurity trends, threats, and defense strategies" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wolfguider.com/blog" />
-        <link rel="canonical" href="https://wolfguider.com/blog" />
-      </Head>
-
-      <div className="min-h-screen pt-20 bg-gradient-to-b from-gray-900 to-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#00FF94] to-[#00CC77]">
-              Cybersecurity Insights
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Expert analysis on the latest threats, defense strategies, and security technologies
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/80">
+      <div className="w-full max-w-lg md:max-w-xl lg:max-w-2xl h-[80vh] bg-gray-950 border-2 border-red-700/70 shadow-2xl rounded-xl overflow-hidden terminal-shadow transform transition-all duration-500 neon-border">
+        <div className="flex justify-between items-center p-3 bg-red-900/40 border-b border-red-700">
+          <span className="text-sm font-mono text-red-100 font-bold flex items-center">
+            <span className="w-3 h-3 bg-red-500 rounded-full mr-2 animate-ping"></span>
+            LIVE AUDIT FEED &gt; Dept. Network Scan
+          </span>
+          <button onClick={onClose} className="text-red-300 hover:text-white transition-colors p-1 rounded-md hover:bg-red-800/50" aria-label="Close demo">
+            <Icon name="close" />
+          </button>
+        </div>
+        
+        <div 
+          ref={terminalRef}
+          className="p-4 h-[calc(100%-47px)] bg-black font-mono text-xs sm:text-sm overflow-y-scroll leading-relaxed tracking-tighter custom-scrollbar"
+        >
+          {simulationScript.slice(0, visibleLines).map((line, index) => (
+            <p key={index} className={`${getLineStyle(line.type)} py-0.5 transition-opacity duration-300 opacity-100`}>
+              {line.text}
             </p>
-          </div>
+          ))}
+          
+          {visibleLines < simulationScript.length && (
+            <p className="text-gray-500 font-bold mt-2 animate-pulse">
+              [RUNNING...]
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-          {/* Featured Post */}
-          <div className="mb-16 group">
-            <div className="relative overflow-hidden rounded-xl border border-gray-800 hover:border-[#00FF94]/50 transition-all duration-500">
-              <img
-                src="/images/cover2.png"
-                alt="Featured Cybersecurity Post"
-                className="w-full h-96 object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8">
-                <span className="text-[#00FF94] font-mono text-sm mb-2">FEATURED POST</span>
-                <h2 className="text-3xl font-bold mb-4">The Evolution of Cyber Warfare in 2025</h2>
-                <p className="text-gray-300 mb-6 max-w-2xl">
-                  How nation-state actors are leveraging AI and quantum computing in sophisticated cyber attacks, and what it means for global security.
-                </p>
-                <div className="flex items-center text-gray-400 text-sm">
-                  <span>July 2, 2025</span>
-                  <span className="mx-2">•</span>
-                  <span>15 min read</span>
-                </div>
+// Left Sidebar Navigation
+const AppSidebar = ({ active, setActive }: { active: string, setActive: (value: string) => void }) => (
+  <div className="fixed left-0 top-0 h-full w-16 bg-[#000000] border-r border-red-900/50 hidden lg:flex flex-col items-center pt-24 space-y-10 z-30 shadow-2xl shadow-black/80">
+    {['TOOLS', 'BLOG', 'LOGIN', 'SUPPORT'].map((item) => (
+      <div 
+        key={item}
+        className={`relative p-2 cursor-pointer transition-all duration-300 group ${
+          active === item ? 'text-red-500 border-l-4 border-red-500' : 'text-gray-500 hover:text-red-300'
+        }`}
+        onClick={() => setActive(item)}
+        title={item}
+      >
+        <span className="text-2xl group-hover:scale-110 transition-transform duration-500">
+          {item === 'TOOLS' && '🛠️'}
+          {item === 'BLOG' && <Icon name="book" className="w-6 h-6" />}
+          {item === 'LOGIN' && '🔑'}
+          {item === 'SUPPORT' && '🆘'}
+        </span>
+        <div className={`absolute -left-0 w-1 h-full rounded-r-md bg-red-600 opacity-0 transition-opacity duration-300 ${
+          active === item ? 'opacity-100' : 'opacity-0'
+        }`} />
+      </div>
+    ))}
+  </div>
+);
+
+// --- Main Application Component ---
+const WolfGuider = () => {
+  const [activeSidebar, setActiveSidebar] = useState('TOOLS');
+  const [showVideoModal, setShowVideoModal] = useState(false); 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("2 minutes elapsed. Showing Live Audit Feed.");
+      setShowVideoModal(true);
+    }, 120000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#000000] font-inter text-white overflow-x-hidden relative">
+      {/* Custom Styles */}
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Space+Mono:wght@400;700&display=swap');
+        
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Space Mono', monospace; }
+
+        @keyframes border-pulse {
+          0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.6); }
+          50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.8); border-color: rgba(239, 68, 68, 1); }
+          100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.6); }
+        }
+        .neon-border {
+          animation: border-pulse 4s infinite ease-in-out;
+        }
+
+        .scanner-button {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.5s ease-in-out;
+        }
+        .scanner-button:hover::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          animation: scan 1.5s infinite;
+        }
+        @keyframes scan {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        .hero-background {
+          background: radial-gradient(circle at center, #1a0000 0%, #000000 100%);
+          border-bottom: 3px solid rgba(239, 68, 68, 0.4);
+          position: relative;
+          perspective: 1000px;
+        }
+        .hero-background::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: linear-gradient(to right, rgba(255, 0, 0, 0.1) 1px, transparent 1px), 
+                            linear-gradient(to bottom, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+          background-size: 80px 80px;
+          animation: grid-scroll 90s linear infinite;
+          z-index: 5;
+          opacity: 0.2;
+        }
+        @keyframes grid-scroll {
+          0% { background-position: 0 0; }
+          100% { background-position: -800px -800px; }
+        }
+        
+        .terminal-shadow {
+          box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #111;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: #dc2626;
+          border-radius: 20px;
+        }
+      `}</style>
+
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 h-16 bg-[#000000]/95 backdrop-blur-sm border-b border-red-900/50 z-40 lg:pl-16 shadow-lg shadow-black/70">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-extrabold text-red-500 font-mono tracking-wide">WOLFGUIDER</h1>
+          <div className="flex items-center space-x-6 text-sm font-semibold text-gray-400 font-mono">
+            <a href="#tools" className="hover:text-red-500 transition-colors duration-300 hidden sm:block">TOOLS</a>
+            <a href="#blog" className="hover:text-red-500 transition-colors duration-300 hidden sm:block">INSIGHTS</a>
+            <a href="#" className="hover:text-red-500 transition-colors duration-300 hidden sm:block">PRICING</a>
+            <button className="px-4 py-1.5 text-sm font-bold rounded-lg bg-red-700 hover:bg-red-600 transition-all shadow-md shadow-red-900/50">ACCESS</button>
+          </div>
+          <button className="lg:hidden text-gray-400 hover:text-red-500 transition-colors duration-300">☰</button>
+        </div>
+      </nav>
+
+      {/* Sidebar */}
+      <AppSidebar 
+        active={activeSidebar} 
+        setActive={setActiveSidebar} 
+      />
+
+      {/* Main Content */}
+      <main className="lg:pl-16 pt-16">
+        <div className="hero-background min-h-[90vh] flex items-center justify-center p-4 relative">
+          <div className="z-10 w-full max-w-7xl py-20 px-4">
+            <div className="text-center p-8 sm:p-12 lg:p-16 rounded-3xl lg:w-4/5 max-w-5xl mx-auto transition-all duration-1000 bg-black/50 border-2 border-red-700 neon-border">
+              <div className="flex justify-center items-center space-x-4 mb-4">
+                <span className="text-lg font-mono text-red-500 tracking-widest"> &lt; INITIATE &gt; </span>
+                <WolfLogo className="w-16 h-12 sm:w-20 sm:h-16 transition-all duration-700 hover:scale-110" />
+                <span className="text-lg font-mono text-red-500 tracking-widest"> &lt; SEQUENCE &gt; </span>
+              </div>
+              
+              <h1 className="text-7xl sm:text-9xl font-extrabold tracking-tighter leading-none text-red-100 drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">
+                WOLF<span className="text-red-600">GUIDER</span>
+              </h1>
+              <p className="text-xl sm:text-3xl font-mono text-red-400 mt-4 tracking-widest drop-shadow-md">
+                CYBER ELITE. SYSTEM DOMAIN.
+              </p>
+
+              <h2 className="text-2xl sm:text-4xl font-light leading-snug mt-12 mb-12 uppercase text-gray-300">
+                The <span className="font-extrabold text-red-500">ZENITH</span> of Ethical Hacking Tools.<br/>
+                <span className="text-gray-100">Zero-Compromise Security.</span>
+              </h2>
+
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <button
+                  onClick={() => setShowVideoModal(true)}
+                  className="scanner-button px-10 py-4 w-full sm:w-auto text-xl font-bold rounded-xl bg-red-700 hover:bg-red-600 transition-all duration-500 ease-in-out shadow-2xl shadow-red-900/70 transform hover:scale-[1.05] border-2 border-red-700"
+                >
+                  VIEW LIVE EXPLOIT SIMULATION
+                </button>
+                <a
+                  href="#blog"
+                  className="px-10 py-4 w-full sm:w-auto text-xl font-semibold rounded-xl bg-gray-900 hover:bg-gray-800 transition-colors duration-500 ease-in-out border-2 border-gray-800 text-gray-300 transform hover:scale-[1.02]"
+                >
+                  READ INSIGHTS
+                </a>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Blog Posts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {blogPosts.map(post => (
-              <article 
-                key={post.id} 
-                className="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-800 hover:border-[#00FF94]/30 transition-all duration-300 group"
-                itemScope
-                itemType="http://schema.org/BlogPosting"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    itemProp="image"
-                  />
-                  <div className="absolute top-4 right-4 bg-[#00FF94] text-black text-xs font-bold px-2 py-1 rounded">
-                    {post.category}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center text-gray-400 text-sm mb-3">
-                    <time dateTime="2025-06-15" itemProp="datePublished">{post.date}</time>
-                    <span className="mx-2">•</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                  <h2 className="text-xl font-bold mb-3 hover:text-[#00FF94] transition-colors" itemProp="headline">
-                    <a href={`/blog/${post.slug}`}>{post.title}</a>
-                  </h2>
-                  <p className="text-gray-300 mb-4" itemProp="description">{post.excerpt}</p>
-                  <a 
-                    href={`/blog/${post.slug}`} 
-                    className="inline-flex items-center text-[#00FF94] group-hover:text-white transition-colors"
-                    aria-label={`Read more about ${post.title}`}
-                  >
-                    Read more
-                    <svg className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {/* Categories Section */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold mb-8 text-center">Explore by Category</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { name: 'Threat Intelligence', icon: '🛡️', count: 12 },
-                { name: 'Network Security', icon: '🌐', count: 8 },
-                { name: 'Penetration Testing', icon: '🔓', count: 15 },
-                { name: 'Cloud Security', icon: '☁️', count: 7 },
-                { name: 'Malware Analysis', icon: '🦠', count: 9 },
-                { name: 'Compliance', icon: '📜', count: 5 },
-                { name: 'IoT Security', icon: '📱', count: 6 },
-                { name: 'AI Security', icon: '🧠', count: 11 },
-              ].map((category, index) => (
+        {/* Tools Section */}
+        <section id="tools" className="py-28 bg-[#0a0a0d] border-t border-red-900/40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-center mb-20 uppercase tracking-widest text-gray-200">
+              ZENITH <span className="text-red-500">TOOLCHAIN</span>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {TOOLS_DATA.map((tool, index) => (
                 <div 
                   key={index} 
-                  className="bg-gray-800/50 p-4 rounded-lg border border-gray-800 hover:border-[#00FF94]/50 transition-colors cursor-pointer"
+                  className="bg-[#000000] p-8 rounded-xl border border-gray-800 shadow-2xl shadow-black/70 transition-all duration-700 ease-out transform hover:border-red-600 hover:shadow-red-900/70 hover:-translate-y-3 group"
                 >
-                  <div className="text-2xl mb-2">{category.icon}</div>
-                  <h3 className="font-medium mb-1">{category.name}</h3>
-                  <p className="text-gray-400 text-sm">{category.count} articles</p>
+                  <div className="flex items-start mb-6 border-b border-red-900/50 pb-4">
+                    <div className="p-4 bg-red-900/30 rounded-xl text-red-500 mr-4 border-2 border-red-800 transition-all duration-700 group-hover:bg-red-900/50 group-hover:scale-[1.1] group-hover:shadow-lg group-hover:shadow-red-900/50">
+                      <Icon name={tool.icon} className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-white mb-1">{tool.name}</h4>
+                      <p className="text-red-400 text-sm font-mono">{tool.desc}</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-400 leading-relaxed">{tool.details}</p>
                 </div>
               ))}
             </div>
           </div>
+        </section>
+      </main>
 
-          {/* Newsletter CTA */}
-          <div className="bg-gradient-to-r from-gray-900 to-black rounded-xl p-8 md:p-12 border border-gray-800 mb-16">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Stay Updated on Cybersecurity</h2>
-              <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                Get the latest security news, vulnerability alerts, and expert insights delivered to your inbox weekly.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  className="flex-grow px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF94] text-white"
-                />
-                <button className="px-6 py-3 bg-gradient-to-r from-[#00FF94] to-[#00CC77] text-black font-bold rounded-lg hover:opacity-90 transition-opacity">
-                  Subscribe
-                </button>
-              </div>
-              <p className="text-gray-500 text-xs mt-3">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+      {/* Live Audit Modal */}
+      <LiveAuditFeedModal 
+        isVisible={showVideoModal} 
+        onClose={() => setShowVideoModal(false)} 
+      />
+    </div>
   );
 };
 
-export default BlogPage;
+export default WolfGuider;

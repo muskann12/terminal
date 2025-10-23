@@ -15,7 +15,8 @@ import {
   FiUserCheck,
   FiDownload,
   FiEye,
-  FiExternalLink
+  FiExternalLink,
+  FiFileText
 } from 'react-icons/fi';
 
 type BreachSeverity = 'high' | 'medium' | 'low';
@@ -85,6 +86,10 @@ const DataBreachChecker: React.FC = () => {
     } finally {
       setIsChecking(false);
     }
+  };
+
+  const handleGetDetailedReport = () => {
+    window.open('https://t.me/Shadowwolfi_bot', '_blank');
   };
 
   const SeverityBadge = ({ level }: { level: BreachSeverity }) => {
@@ -287,20 +292,29 @@ const DataBreachChecker: React.FC = () => {
                         ))}
                       </div>
 
-                      {/* Added link to check where email was leaked */}
-                      {result.found && (
-                        <div className="mt-4 text-center">
-                          <a 
-                            href="https://t.me/wolfguider" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-xs md:text-sm text-[#00FF94] hover:text-[#00CC77] transition-colors"
-                          >
-                            <FiExternalLink className="text-sm" />
-                            Want to know where exactly your data was leaked? Contact us on Telegram
-                          </a>
+                      {/* Get Detailed Report Button */}
+                      <div className="mt-4 md:mt-6 p-4 bg-gray-800/70 rounded-lg border border-gray-600">
+                        <div className="text-center mb-4">
+                          <h4 className="font-bold text-white mb-2 flex items-center justify-center gap-2 text-sm md:text-base">
+                            <FiFileText className="text-[#00FF94]" />
+                            Want Detailed Information?
+                          </h4>
+                          <p className="text-gray-300 text-xs md:text-sm mb-4">
+                            Get complete breach details including exact data exposed, 
+                            password hashes, and comprehensive security recommendations
+                          </p>
                         </div>
-                      )}
+                        <button
+                          onClick={handleGetDetailedReport}
+                          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-blue-500/30"
+                        >
+                          <FiExternalLink className="text-lg" />
+                          Get Detailed Report - Contact on Telegram
+                        </button>
+                        <p className="text-center text-xs text-gray-400 mt-2">
+                          Complete breach analysis with actionable insights
+                        </p>
+                      </div>
                       
                       <div className="mt-4 md:mt-6 p-3 md:p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 className="font-bold text-white mb-2 md:mb-3 flex items-center gap-2 text-sm md:text-base">

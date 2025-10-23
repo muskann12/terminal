@@ -28,9 +28,9 @@ export default function RootLayout({
       <body className={`${orbitron.variable} font-orbitron bg-black text-white`}>
         <CustomCursor /> {/* 👈 Use your custom cursor */}
 
-        <Navbar />
+       
         <main>{children}</main>
-        <Footer />
+       
       </body>
     </html>
   )
